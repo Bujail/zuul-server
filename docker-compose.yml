@@ -1,0 +1,33 @@
+version: '2'
+services:
+  results-services:
+    image: result
+    ports:
+      - "8086:8086"
+    depends_on:
+     - eureka-client
+    container_name: results-services
+  entity-service:
+    image: service
+    ports:
+     - "8082:8082"
+    depends_on:
+     - eureka-client
+    links:
+     - results-services  
+    container_name: entity-service
+  eureka-client:
+    image: eureka
+    ports:
+     - "8761:8761"
+    container_name: eureka-client
+  zuul-server:
+    image: zuul
+    depends_on:
+     - eureka-client
+    ports:
+     - "9090:9090"
+networks:
+  default:
+    external:
+      name: mynet
