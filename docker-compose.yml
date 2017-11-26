@@ -22,7 +22,7 @@ services:
      - "8761:8761"
     container_name: eureka-client
   zuul-server:
-    image: zuul
+    image: zuul-server
     depends_on:
      - eureka-client
     ports:
